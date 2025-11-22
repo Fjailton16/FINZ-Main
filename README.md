@@ -63,3 +63,80 @@ Clone o repositório para o seu ambiente local:
 ```bash
 git clone [https://github.com/Fjailton16/FINZ-Main.git](https://github.com/Fjailton16/FINZ-Main.git)
 cd FINZ-Main
+### 2. Configuração do Backend (Supabase)
+
+Você deve ter o **Supabase CLI** instalado e o projeto vinculado.
+
+#### A. Inicializar o Banco de Dados
+
+Use as migrações salvas para configurar seu banco de dados local:
+
+```bash
+# Inicia os serviços locais do Supabase (Postgres, Auth, Storage)
+supabase start
+# Aplica todas as migrações (incluindo ENUMs, RLS e funções)
+supabase migration up
+
+B. Variáveis de Ambiente
+Crie um arquivo .env na raiz do projeto para armazenar suas chaves:
+
+# Seu URL e chaves do Supabase (Pegue no Dashboard -> Configurações -> API)
+VITE_SUPABASE_URL="https://SEU_PROJETO_REF.supabase.co"
+VITE_SUPABASE_ANON_KEY="SUA_CHAVE_ANON"
+
+# Variáveis do Serviço de Email (Resend)
+VITE_RESEND_API_KEY="SUA_CHAVE_RESEND"
+
+C. Secrets para Edge Functions
+As Edge Functions dependem de chaves de serviço de alto privilégio. Configure-as via CLI:
+
+# Necessário para operações de admin (deletar usuários)
+supabase secrets set SUPABASE_URL="SEU_PROJETO_URL"
+supabase secrets set SUPABASE_SERVICE_ROLE_KEY="SUA_SERVICE_ROLE_KEY"
+supabase secrets set RESEND_API_KEY="SUA_CHAVE_RESEND"
+
+D. Deploy das Edge Functions
+Implante todas as funções necessárias (o código está na pasta supabase/functions):
+
+supabase functions deploy --all
+
+3. Executar o Frontend
+Instale as dependências e inicie o servidor de desenvolvimento:
+
+# Instala as dependências (certifique-se de usar npm, yarn, ou bun)
+npm install
+
+# Inicia o servidor local
+npm run dev
+
+O aplicativo estará acessível em http://localhost:5173.
+
+Entendido. O bloco de código que você tentou copiar deve ter sido interrompido, provavelmente na seção de configuração de variáveis ou secrets.
+
+Vou fornecer a parte final do README.md, começando da seção "3. Executar o Frontend" (dentro de "Como Executar o Projeto Localmente") até o final do documento:
+
+Markdown
+
+### 3. Executar o Frontend
+
+Instale as dependências e inicie o servidor de desenvolvimento:
+
+```bash
+# Instala as dependências (certifique-se de usar npm, yarn, ou bun)
+npm install
+
+# Inicia o servidor local
+npm run dev
+O aplicativo estará acessível em http://localhost:5173.
+
+👥 Contato
+Se você tiver dúvidas, sugestões ou encontrar um bug, sinta-se à vontade para:
+
+Abrir uma Issue neste repositório.
+
+Contatar os desenvolvedores:
+
+Francisco Jailton (GitHub: @Fjailton16)
+
+João Vitor
+
