@@ -1,0 +1,10 @@
+project_id = "tifjsacsookxeuadawjh"
+
+[functions.delete-denied-user]
+verify_jwt = false
+
+[functions.delete-user-completely]
+verify_jwt = true
+
+[functions.send-provisional-password]
+verify_jwt = false
