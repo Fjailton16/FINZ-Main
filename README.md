@@ -70,41 +70,53 @@ Você deve ter o **Supabase CLI** instalado e o projeto vinculado.
 Use as migrações salvas para configurar seu banco de dados local:
 
 Inicia os serviços locais do Supabase (Postgres, Auth, Storage)
-'supabase start'
+
+"supabase start"
+
 Aplica todas as migrações (incluindo ENUMs, RLS e funções)
-'supabase migration up'
+
+"supabase migration up"
 
 ### B. Variáveis de Ambiente
 Crie um arquivo .env na raiz do projeto para armazenar suas chaves:
 
 Seu URL e chaves do Supabase (Pegue no Dashboard -> Configurações -> API)
-'VITE_SUPABASE_URL="https://SEU_PROJETO_REF.supabase.co'
-'VITE_SUPABASE_ANON_KEY="SUA_CHAVE_ANON'
+
+
+"VITE_SUPABASE_URL="https://SEU_PROJETO_REF.supabase.co""
+
+"VITE_SUPABASE_ANON_KEY="SUA_CHAVE_ANON""
 
 Variáveis do Serviço de Email (Resend)
-'VITE_RESEND_API_KEY="SUA_CHAVE_RESEND"'
+
+"VITE_RESEND_API_KEY="SUA_CHAVE_RESEND""
 
 ### C. Secrets para Edge Functions
 As Edge Functions dependem de chaves de serviço de alto privilégio. Configure-as via CLI:
 
 Necessário para operações de admin (deletar usuários)
-'supabase secrets set SUPABASE_URL="SEU_PROJETO_URL"'
-'supabase secrets set SUPABASE_SERVICE_ROLE_KEY="SUA_SERVICE_ROLE_KEY"'
-'supabase secrets set RESEND_API_KEY="SUA_CHAVE_RESEND"'
+
+"supabase secrets set SUPABASE_URL="SEU_PROJETO_URL""
+
+"supabase secrets set SUPABASE_SERVICE_ROLE_KEY="SUA_SERVICE_ROLE_KEY""
+
+"supabase secrets set RESEND_API_KEY="SUA_CHAVE_RESEND""
 
 ### D. Deploy das Edge Functions
 Implante todas as funções necessárias (o código está na pasta supabase/functions):
 
-'supabase functions deploy --all'
+"supabase functions deploy --all"
 
 ## 3. Executar o Frontend
 Instale as dependências e inicie o servidor de desenvolvimento:
 
 Instala as dependências (certifique-se de usar npm, yarn, ou bun)
-'npm install'
+
+"npm install"
 
 Inicia o servidor local
-'npm run dev'
+
+"npm run dev"
 
 O aplicativo estará acessível em http://localhost:5173.
 
@@ -118,6 +130,7 @@ Contatar os desenvolvedores:
 Francisco Jailton (GitHub: @Fjailton16)
 
 João Vitor
+
 
 
 
