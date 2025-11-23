@@ -45,6 +45,13 @@ export const AddTransactionDialog = ({ onAdd }: AddTransactionDialogProps) => {
       description: description.trim() || undefined,
     });
 
+    // Dispara evento global para o tutorial saber que uma transação foi adicionada
+    window.dispatchEvent(
+      new CustomEvent("finz-transaction-added", {
+        detail: { type },
+      })
+    );
+
     toast.success("Transação adicionada com sucesso");
     setOpen(false);
     resetForm();
@@ -58,15 +65,24 @@ export const AddTransactionDialog = ({ onAdd }: AddTransactionDialogProps) => {
     setDescription("");
   };
 
+  const handleOpenChange = (value: boolean) => {
+    setOpen(value);
+    window.dispatchEvent(
+      new CustomEvent("finz-transaction-dialog-toggle", {
+        detail: { open: value },
+      })
+    );
+  };
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         <Button className="gap-2">
           <Plus className="h-4 w-4" />
           Adicionar Transação
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px]" data-tour="transaction-form">
         <DialogHeader>
           <DialogTitle>Adicionar Nova Transação</DialogTitle>
         </DialogHeader>

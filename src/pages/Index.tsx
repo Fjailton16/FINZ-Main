@@ -10,6 +10,8 @@ import { FinancialAlerts } from "@/components/FinancialAlerts";
 import { TransactionList } from "@/components/TransactionList";
 import { AddTransactionDialog } from "@/components/AddTransactionDialog";
 import { EditTransactionDialog } from "@/components/EditTransactionDialog";
+import { WelcomeTutorial } from "@/components/WelcomeTutorial";
+import { FeedbackButton } from "@/components/FeedbackButton";
 import { LogOut, Settings, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
@@ -26,6 +28,8 @@ const Index = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [accessChecked, setAccessChecked] = useState(false);
   const [userName, setUserName] = useState<string>("");
+  const [showTutorial, setShowTutorial] = useState(false);
+  const [isFirstLogin, setIsFirstLogin] = useState(false);
 
   useEffect(() => {
     const checkAccess = async () => {
@@ -64,15 +68,21 @@ const Index = () => {
       console.log("É admin/master?", hasAdminRole);
       setIsAdmin(hasAdminRole);
 
-      // Fetch user's full name
+      // Fetch user's full name and first_login status
       const { data: profileData } = await supabase
         .from("profiles")
-        .select("full_name")
+        .select("full_name, first_login")
         .eq("id", user.id)
         .maybeSingle();
       
       if (profileData?.full_name) {
         setUserName(profileData.full_name);
+      }
+
+      // Check if it's the first login
+      if (profileData?.first_login === true) {
+        setIsFirstLogin(true);
+        setShowTutorial(true);
       }
 
       // Admin always gets access
@@ -115,6 +125,24 @@ const Index = () => {
     setEditDialogOpen(true);
   };
 
+  const handleTutorialComplete = async () => {
+    setShowTutorial(false);
+    
+    // Update first_login to false
+    if (isFirstLogin && user?.id) {
+      const { error } = await supabase
+        .from("profiles")
+        .update({ first_login: false })
+        .eq("id", user.id);
+      
+      if (error) {
+        console.error("Error updating first_login:", error);
+      } else {
+        setIsFirstLogin(false);
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b bg-card">
@@ -151,7 +179,9 @@ const Index = () => {
                   <Settings className="h-4 w-4" />
                 </Button>
               )}
-              <AddTransactionDialog onAdd={addTransaction} />
+              <div data-tour="add-transaction">
+                <AddTransactionDialog onAdd={addTransaction} />
+              </div>
               <Button variant="outline" size="icon" onClick={() => navigate("/profile")} title="Perfil">
                 <User className="h-4 w-4" />
               </Button>
@@ -175,25 +205,31 @@ const Index = () => {
 
       <main className="container mx-auto px-4 py-8">
         <div className="space-y-8">
-          <SummaryCards transactions={transactions} />
+          <div data-tour="summary-cards">
+            <SummaryCards transactions={transactions} />
+          </div>
 
-          <FinancialAlerts transactions={transactions} />
+          <div data-tour="alerts">
+            <FinancialAlerts transactions={transactions} />
+          </div>
 
           <div className="grid gap-8 lg:grid-cols-2">
             <ExpenseChart transactions={transactions} />
             <TrendChart transactions={transactions} />
           </div>
 
-          <div className="grid gap-8 lg:grid-cols-2">
+          <div className="grid gap-8 lg:grid-cols-2" data-tour="reports">
             <MonthlyReport transactions={transactions} />
             <AnnualReport transactions={transactions} />
           </div>
 
-          <TransactionList
-            transactions={transactions}
-            onDelete={deleteTransaction}
-            onEdit={handleEditTransaction}
-          />
+          <div data-tour="transaction-list">
+            <TransactionList
+              transactions={transactions}
+              onDelete={deleteTransaction}
+              onEdit={handleEditTransaction}
+            />
+          </div>
         </div>
       </main>
 
@@ -203,6 +239,15 @@ const Index = () => {
         onOpenChange={setEditDialogOpen}
         onUpdate={updateTransaction}
       />
+
+      {showTutorial && (
+        <WelcomeTutorial 
+          userName={userName.split(' ')[0].charAt(0).toUpperCase() + userName.split(' ')[0].slice(1).toLowerCase()} 
+          onComplete={handleTutorialComplete} 
+        />
+      )}
+
+      <FeedbackButton />
     </div>
   );
 };

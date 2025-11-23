@@ -36,7 +36,7 @@ export const TrendChart = ({ transactions }: TrendChartProps) => {
   });
 
   return (
-    <Card>
+    <Card data-tour="trend-chart">
       <CardHeader>
         <CardTitle>Tendência (Últimos 30 Dias)</CardTitle>
       </CardHeader>

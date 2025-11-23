@@ -29,7 +29,7 @@ export const ExpenseChart = ({ transactions }: ExpenseChartProps) => {
 
   if (categoryData.length === 0) {
     return (
-      <Card>
+      <Card data-tour="expense-chart">
         <CardHeader>
           <CardTitle>Despesas por Categoria</CardTitle>
         </CardHeader>
@@ -41,7 +41,7 @@ export const ExpenseChart = ({ transactions }: ExpenseChartProps) => {
   }
 
   return (
-    <Card>
+    <Card data-tour="expense-chart">
       <CardHeader>
         <CardTitle>Despesas por Categoria</CardTitle>
       </CardHeader>

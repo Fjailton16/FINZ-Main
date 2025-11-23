@@ -137,7 +137,7 @@ export const AnnualReport = ({ transactions }: AnnualReportProps) => {
   };
 
   return (
-    <Card>
+    <Card data-tour="annual-report">
       <CardHeader>
         <div className="flex items-center justify-between">
           <div>
@@ -218,7 +218,7 @@ export const AnnualReport = ({ transactions }: AnnualReportProps) => {
           </div>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-4" data-tour="trend-chart">
           <h4 className="text-sm font-semibold">Evolução Mensal</h4>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={monthlyData}>

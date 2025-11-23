@@ -120,7 +120,7 @@ export const MonthlyReport = ({ transactions }: MonthlyReportProps) => {
   };
 
   return (
-    <Card>
+    <Card data-tour="monthly-report">
       <CardHeader>
         <div className="flex items-center justify-between">
           <div>

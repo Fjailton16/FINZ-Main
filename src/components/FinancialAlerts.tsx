@@ -81,7 +81,7 @@ export const FinancialAlerts = ({ transactions }: FinancialAlertsProps) => {
   if (alerts.length === 0) return null;
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4" data-tour="alerts">
       {alerts.map((alert, index) => (
         <Alert
           key={index}

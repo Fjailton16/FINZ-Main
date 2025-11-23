@@ -52,6 +52,7 @@ const handler = async (req: Request) => {
     // 4. ENVIAR EMAIL DE CANCELAMENTO (Chamada ao Resend)
     // =====================================================
     if (userEmail && RESEND_API_KEY) {
+        // ADICIONE ESTE LOG (só para debug, remova depois!)
         console.log(`Chave Resend OK. Enviando email para: ${userEmail}`);
         
         const emailResponse = await fetch("https://api.resend.com/emails", {
